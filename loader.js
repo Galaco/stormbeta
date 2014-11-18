@@ -6,15 +6,6 @@ document.write("<script src='js/core/graphics.js' type='text/javascript'></scrip
 document.write("<script src='js/core/audio.js' type='text/javascript'></script>");
 document.write("<script src='js/core/animation.js' type='text/javascript'></script>");
 
-//objects
-document.write("<script src='js/objects/game.js' type='text/javascript'></script>");
-document.write("<script src='js/objects/rod.js' type='text/javascript'></script>");
-document.write("<script src='js/objects/items.js' type='text/javascript'></script>");
-document.write("<script src='js/objects/rock.js' type='text/javascript'></script>");
-document.write("<script src='js/objects/itemDef.js' type='text/javascript'></script>");
-document.write("<script src='js/objects/followObject.js' type='text/javascript'></script>");
-document.write("<script src='js/objects/heart.js' type='text/javascript'></script>");
-document.write("<script src='js/objects/flyingItem.js' type='text/javascript'></script>");
 
 ///////////////////////////////////
 //	GAME OBJECT
