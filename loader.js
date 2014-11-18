@@ -6,6 +6,11 @@ document.write("<script src='js/core/graphics.js' type='text/javascript'></scrip
 document.write("<script src='js/core/audio.js' type='text/javascript'></script>");
 document.write("<script src='js/core/animation.js' type='text/javascript'></script>");
 
+//////////////////////////////////
+// GAME SPECIFIC STUFF LOADING
+//////////////////////////////////
+document.write("<script src='js/objects/game.js' type='text/javascript'></script>");
+
 
 ///////////////////////////////////
 //	GAME OBJECT
