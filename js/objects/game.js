@@ -34,9 +34,6 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 	this.bg4.setScrollRate(1.75);
 	this.bg4.posY = 460;
 	
-	//hud bits and bobs
-	this.hpId = new UIElement(this.model.loadImg("resources/hpbar.png"), 50, 20, "100%");
-	
 	//Enemies
 	this.itemArray.push(new Enemy(this.model.loadImg("resources/testEnemy.png"), 200, 420 ));
 	
@@ -77,6 +74,11 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 		for(i = 0; i < this.itemArray.length; i++)
 		{
 			this.itemArray[i].update();
+			if (this.itemArray[i].aabb.colliding(this.currentWarrior)){
+				if (this.currentWarrior.attacking){
+					this.itemArray[i].onCollision();	
+				}
+			}
 		}
 		// http://www.cambiaresearch.com/articles/15/javascript-char-codes-key-codes
 	}
@@ -101,12 +103,13 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 		 for(i = 0; i < this.itemArray.length; i++)
 		 {
 			 this.model.draw(this.itemArray[i].sprite, this.itemArray[i].posX, this.itemArray[i].posY,0,1,1);
+			 this.model.drawLine(this.itemArray[i].aabb.x1, this.itemArray[i].aabb.y1, this.itemArray[i].aabb.x2, this.itemArray[i].aabb.y2, "#0F0", "2");
 			// this.drawSpriteByID(this.itemArray[i].id, this.itemArray[i].posX, this.itemArray[i].posY,1,1,false,this.itemArray[i].angle);
-		 }		
-		 
-		 
-		 this.model.draw(this.hpId.sprite, this.hpId.posX, this.hpId.posY,0,1,1);
-		 this.model.draw(this.hpId.text);
+		 }
+		 //console.log(this.currentWarrior);
+		this.model.drawLine(this.currentWarrior.aabb.x1, this.currentWarrior.aabb.y1, this.currentWarrior.aabb.x2, this.currentWarrior.aabb.y2, "#0F0", "2");
+		this.model.drawLine(this.currentWarrior.childLeft.aabb.x1, this.currentWarrior.childLeft.aabb.y1, this.currentWarrior.childLeft.aabb.x2, this.currentWarrior.childLeft.aabb.y2, "#0F0", "2");
+		this.model.drawLine(this.currentWarrior.childRight.aabb.x1, this.currentWarrior.childRight.aabb.y1, this.currentWarrior.childRight.aabb.x2, this.currentWarrior.childRight.aabb.y2, "#0F0", "2");
 	}
 	
 	this.init = function(){

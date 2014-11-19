@@ -5,8 +5,6 @@
 	this.y2 = y2;
 	this.originX = x1 + ((x2 - x1) / 2);
 	this.originY = y1 + ((y2 - y1) / 2);
-	console.log("originX = ", this.originX);
-	console.log("originY = ", this.originY);
 	
 	this.colliding = function(/*AABB*/other){		
 		if(!(((this.x2< other.x1)||(other.x2<other.x1))||((this.y2 <other.y1)||(other.y2<this.y1)))){
@@ -16,7 +14,22 @@
 	}
 	
 	this.update = function(xpos, ypos) {
-		xdiff = this.originX + (xpos - this.originX);
+		width = x2-x1;
+		height = y2-y1;
+		
+		this.x1 = xpos - width/2;
+		this.x2 = this.x1 + width;
+		this.y1 = ypos - height/2;
+		this.y2 = this.y1 + height;
+		
+		this.originX = this.x1 + width/2;
+		this.originY = this.y1 + height/2;
+		
+	
+	
+	
+	
+		/*xdiff = this.originX + (xpos - this.originX);
 		ydiff = this.originY + (ypos - this.originY);
 		this.x1 = this.x1 + xdiff;
 		this.x2 = this.x2 + xdiff;
@@ -24,6 +37,6 @@
 		this.y2 = this.y2 + ydiff;
 		
 		this.originX = xdiff;
-		this.originY = ydiff;
+		this.originY = ydiff;*/
 	}
 }

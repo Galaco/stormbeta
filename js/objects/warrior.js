@@ -2,6 +2,12 @@ function Warrior(spriteA, posX, posY, colliderImg){
 
 	//Sprite setting
 	this.sprite = spriteA;
+	this.aabb = new AABB(1,1,2,2);
+	var self = this;
+	
+	this.sprite.onload = function() {
+		self.aabb = new AABB(posX-self.sprite.width/2, posY-self.sprite.height/2, posX+self.sprite.width/2, posY+self.sprite.height/2);
+	}
 		
 	//Position setting
 	this.posX = posX
@@ -92,6 +98,8 @@ function ChildCollider(xpos, ypos, sprite)
 	this.sprite = sprite;
 	this.visiblity = false;
 	this.attacking = false;
+	console.log(xpos + " " + ypos);
+	console.log(this.width);
 	this.aabb = new AABB(xpos - (this.width/2), ypos + (this.height/2), xpos + (this.width/2), ypos - (this.height/2));
 		
 	this.setActive = function(isActive){
