@@ -75,13 +75,12 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 		//Update enemies
 		for(i = 0; i < this.enemyManager.enemies.length; i++)
 		{
-			this.itemArray[i].update();
-			if (this.itemArray[i].aabb.colliding(this.currentWarrior)){
-				if (this.currentWarrior.attacking){
-					this.itemArray[i].onCollision();	
-				}
-			}
 			this.enemyManager.enemies[i].update();
+			
+			//Check collisions with player and attack objects
+			//var enemyAABB = enemyManager.enemies[i].aabb;
+			//var 
+			
 		}
 		// http://www.cambiaresearch.com/articles/15/javascript-char-codes-key-codes
 	}
