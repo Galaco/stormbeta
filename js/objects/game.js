@@ -24,7 +24,7 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 	//ARRAYS
 	
 	//Background elements
-	this.bg = new Background(this.model, "resources/bgtest1.jpg");
+	this.bg = new Background(this.model, "resources/back1.png");
 	this.bg.setScrollRate(1);
 	this.bg.posY = 270;
 	this.bg2 = new Background(this.model, "resources/wall.png");
@@ -33,7 +33,7 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 	this.bg3 = new Background(this.model, "resources/fbbar.png");
 	this.bg3.setScrollRate(1.8);
 	this.bg3.posY = 520;
-	this.bg4 = new Background(this.model, "resources/floor.png");
+	this.bg4 = new Background(this.model, "resources/road.png");
 	this.bg4.setScrollRate(1.65);
 	this.bg4.posY = 460;
 
