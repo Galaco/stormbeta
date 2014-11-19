@@ -108,11 +108,7 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 			 this.model.draw(this.enemyManager.enemies[i].sprite, this.enemyManager.enemies[i].posX, this.enemyManager.enemies[i].posY,1,1,1.0);
 			// this.drawSpriteByID(this.itemArray[i].id, this.itemArray[i].posX, this.itemArray[i].posY,1,1,false,this.itemArray[i].angle);
 		 }
-		 //console.log(this.currentWarrior);
-		this.model.drawLine(this.currentWarrior.aabb.x1, this.currentWarrior.aabb.y1, this.currentWarrior.aabb.x2, this.currentWarrior.aabb.y2, "#0F0", "2");
-		this.model.drawLine(this.currentWarrior.childLeft.aabb.x1, this.currentWarrior.childLeft.aabb.y1, this.currentWarrior.childLeft.aabb.x2, this.currentWarrior.childLeft.aabb.y2, "#0F0", "2");
-		this.model.drawLine(this.currentWarrior.childRight.aabb.x1, this.currentWarrior.childRight.aabb.y1, this.currentWarrior.childRight.aabb.x2, this.currentWarrior.childRight.aabb.y2, "#0F0", "2");
-	}
+		}
 	
 	this.init = function(){
 		//left arrow - 37

@@ -91,16 +91,23 @@ function Warrior(spriteA, posX, posY, colliderImg){
 
 function ChildCollider(xpos, ypos, sprite)
 {
-	this.width = sprite.width;
-	this.height = sprite.height;
+	
 	this.xpos = xpos;
 	this.ypos = ypos;
 	this.sprite = sprite;
 	this.visiblity = false;
 	this.attacking = false;
-	console.log(xpos + " " + ypos);
-	console.log(this.width);
-	this.aabb = new AABB(xpos - (this.width/2), ypos + (this.height/2), xpos + (this.width/2), ypos - (this.height/2));
+	this.aabb = new AABB(1,1,2,2);
+	this.width = 1;
+	this.height = 1;
+	
+	var self = this;
+	
+	this.sprite.onload = function() {
+		self.width = this.width;
+		self.height = this.height;
+		self.aabb = new AABB(xpos - (self.width/2), ypos + (self.height/2), xpos + (self.width/2), ypos - (self.height/2));
+	}
 		
 	this.setActive = function(isActive){
 		this.visibility = isActive;
