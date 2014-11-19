@@ -30,7 +30,7 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 	
 	
 	//Enemies
-	//this.itemArray.push(new Enemy(this.model.loadImg("resources/attackcollider.png"), 961, 100 ));
+	this.itemArray.push(new Enemy(this.model.loadImg("resources/attackcollider.png"), 200, 100 ));
 	
 	//ANIMATION
 		
@@ -88,7 +88,7 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 		//Items
 		 for(i = 0; i < this.itemArray.length; i++)
 		 {
-			 this.model.draw(this.itemArray[i].sprite, this.itemArray[i].posX, this.itemArray[i].posY,0,0.1,0.1);
+			 this.model.draw(this.itemArray[i].sprite, this.itemArray[i].posX, this.itemArray[i].posY,0,1,1);
 			// this.drawSpriteByID(this.itemArray[i].id, this.itemArray[i].posX, this.itemArray[i].posY,1,1,false,this.itemArray[i].angle);
 		 }		
 	}
