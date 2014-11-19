@@ -6,12 +6,16 @@
 	this.originX = x1 + ((x2 - x1) / 2);
 	this.originY = y1 + ((y2 - y1) / 2);
 	
-	this.colliding = function(/*AABB*/other){		
-		if(!(((this.x2< other.x1)||(other.x2<other.x1))||((this.y2 <other.y1)||(other.y2<this.y1)))){
-		return true;
-		}
-		return false;
+	this.colliding = function(/*AABB*/other){
+	//if(!(((thismax< othermin)||(othermax<thismin))||((thismax <othermin)||(othermax<thismin)))){	
+	if(this.x1 < other.x2 &&
+   this.x2 > other.x1 &&
+   this.y1 < other.y2 &&
+   this.y2 > other.y1) {
+	return true;
 	}
+	return false;
+   }
 	
 	this.update = function(xpos, ypos) {
 		width = x2-x1;

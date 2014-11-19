@@ -2,6 +2,20 @@ function Warrior(spriteA, posX, posY, colliderImg){
 
 	//Sprite setting
 	this.sprite = spriteA;
+	
+	this.numberOfAnimFrames = 4;
+	this.anim = new Animation(spriteA,this.numberOfAnimFrames,100,100,0.125);
+	this.aabb = new AABB(1,1,2,2);
+	var self = this;
+	this.health = 100;
+	
+	this.sprite.onload = function() {
+		this.actualWidth = self.sprite.width/4;
+		self.aabb = new AABB((posX-this.actualWidth/4), 
+		(posY-self.sprite.height/2), 
+		((posX+this.actualWidth/4)), 
+		(posY+self.sprite.height/2));
+	}
 		
 	//Position setting
 	this.posX = posX
@@ -19,7 +33,7 @@ function Warrior(spriteA, posX, posY, colliderImg){
 	this.childLeftOffset = 30;
 	this.childRightOffset = 30;
 	this.childLeft = new ChildCollider(this.posX - this.childLeftOffset, this.posY, colliderImg);
-	this.childRight = new ChildCollider(this.posX + this.childLeftOffset, this.posY, colliderImg);
+	this.childRight = new ChildCollider(this.posX + this.childRightOffset, this.posY, colliderImg);
 	
 	//Attacking state
 	this.currentAttackTime = 0;
@@ -38,6 +52,7 @@ function Warrior(spriteA, posX, posY, colliderImg){
 	}
 	
 	this.update = function(frameTime, keys) {
+		this.anim.update(frameTime);
 		//Attack handling
 		if(this.attacking == true) {
 			this.currentAttackTime += frameTime;

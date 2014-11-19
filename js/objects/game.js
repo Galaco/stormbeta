@@ -12,7 +12,8 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 	this.inited = false;
 	
 	//IMAGES
-	this.warriorImg = this.model.loadImg("resources/testWarrior.png");
+	this.warriorImg = this.model.loadImg("resources/animtestfull.png");
+	this.enemyImg = this.model.loadImg("resources/testWarrior.png");
 	this.colliderImg = this.model.loadImg("resources/attackcollider.png");
 
 	//AUDIO
@@ -42,7 +43,7 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 	
 	//Entities
 
-	this.enemyManager = new EnemyManager(this.model.canvasWidth, this.model.canvasHeight, this.warriorImg);
+	this.enemyManager = new EnemyManager(this.model.canvasWidth, this.model.canvasHeight, this.enemyImg);
 	this.currentWarrior = new Warrior(this.warriorImg, this.model.canvasWidth/2, 420, this.colliderImg);
 	
 	//this is main game loop
@@ -53,17 +54,12 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 		var frameTime = (this.currentTime - this.lastTime) / 1000; //get 1 frame update time in seconds
 		this.lastTime = this.currentTime;
 		this.currentWarrior.update(frameTime, key);
-		this.clock += frameTime;
-		if (this.clock < 1){
-			//loading
-			this.model.drawText("LoADINg..........",137,150,50,"rgba(200,200,200,1.0)","Cabin Sketch",-3,0,0);
-			return;
-		}
-		if (this.clock < 1 && this.inited == false){
-			//Do init here
-			this.init(this.currentWarrior);
-		}
 		
+		if (this.clock == 0){
+			//Do init here
+			this.init();
+		}
+		this.clock += frameTime;
 		
 		//Draw stuff
 		this.draw();
@@ -82,9 +78,30 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 		//Update enemies
 		for(i = 0; i < this.enemyManager.enemies.length; i++)
 		{
-			if (this.enemyManager.enemies[i].aabb.colliding(this.currentWarrior)){
-				if (this.currentWarrior.attacking){
-					this.enemyManager.enemies[i].onCollision();	
+			if(this.enemyManager.enemies[i].dead)
+			{
+				//Kill it from the array
+				this.enemyManager.enemies.splice(i,1);
+			}
+				if ((this.enemyManager.enemies[i].aabb.colliding(this.currentWarrior.childLeft.aabb) && this.currentWarrior.childLeft.attacking)
+				|| (this.enemyManager.enemies[i].aabb.colliding(this.currentWarrior.childRight.aabb) && this.currentWarrior.childRight.attacking)){
+					if (this.currentWarrior.attacking){
+						this.enemyManager.enemies[i].onCollision();
+								
+					}
+				}
+				
+			if (this.enemyManager.enemies[i].aabb.colliding(this.currentWarrior.aabb)){
+				this.currentWarrior.health -=1;
+				if(this.enemyManager.enemies[i].posX < 480) {
+						//Push the enemy left
+						this.enemyManager.enemies[i].posX -= 15;
+				} else {
+						//push to the right
+						this.enemyManager.enemies[i].posX += 15;
+				}
+				if(this.currentWarrior.health <= 0) {
+					this.enemyManager.enemies.shouldSpawn = false;
 				}
 			}
 			this.enemyManager.enemies[i].update();
@@ -99,18 +116,21 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 
 	this.draw = function(){
 		this.model.clearScreen('#FFF');
-				this.model.drawBackground(this.bg, this.bg.posX, this.bg.posY,0,this.bg.scaleX,this.bg.scaleY);
+		this.model.drawBackground(this.bg, this.bg.posX, this.bg.posY,0,this.bg.scaleX,this.bg.scaleY);
 		this.model.drawBackground(this.bg2, this.bg2.posX, this.bg2.posY,0,this.bg2.scaleX, this.bg2.scaleY);
 		this.model.drawBackground(this.bg4, this.bg4.posX, this.bg4.posY,0,this.bg4.scaleX, this.bg4.scaleY);
 		this.model.drawBackground(this.bg3, this.bg3.posX, this.bg3.posY,0,this.bg3.scaleX, this.bg3.scaleY);
 		//Draw warrior
-		this.model.draw(this.currentWarrior.sprite, this.currentWarrior.posX, this.currentWarrior.posY,1,1,1.0);
+		this.model.drawAnimFrame(this.currentWarrior.anim, this.currentWarrior.posX, this.currentWarrior.posY,0);
 		
 			if(this.currentWarrior.childLeft.visibility == true){
 				this.model.draw(this.currentWarrior.childLeft.sprite, this.currentWarrior.childLeft.xpos, this.currentWarrior.childLeft.ypos,1,1,1.0);
+				this.currentWarrior.childLeft.aabb.renderDebug(this.model);
+
 				}
 			if(this.currentWarrior.childRight.visibility == true){
 				this.model.draw(this.currentWarrior.childRight.sprite, this.currentWarrior.childRight.xpos, this.currentWarrior.childRight.ypos,1,1,1.0);
+				this.currentWarrior.childRight.aabb.renderDebug(this.model);
 				}
 		//Draw everything
 		//Items
@@ -120,9 +140,14 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 			 this.enemyManager.enemies[i].aabb.renderDebug(this.model);
 			// this.drawSpriteByID(this.itemArray[i].id, this.itemArray[i].posX, this.itemArray[i].posY,1,1,false,this.itemArray[i].angle);
 		 }
+		 this.currentWarrior.aabb.renderDebug(this.model);
 		 
-		 this.currentWarrior.childLeft.aabb.renderDebug(this.model);
-		 this.currentWarrior.childRight.aabb.renderDebug(this.model);
+		 //Dead
+		 if(this.currentWarrior.health <= 0) {
+			this.model.clearScreen('#FFF');
+			this.model.drawText("YOU ARE DEAD",this.currentWarrior.posX,this.currentWarrior.posY,30,"rgba(255,0,0,1.0)");
+		}
+		 
 	}
 	
 	this.init = function(){

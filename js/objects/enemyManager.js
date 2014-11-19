@@ -4,7 +4,7 @@ function EnemyManager(canvasWidth, canvasHeight, enemyImg){
 	this.canvasWidth = canvasWidth;
 	this.canvasHeight = canvasHeight;
 	this.enemies = [];
-	this.enemyYpos = 420;
+	//this.enemyYpos = 420;
 	this.shouldSpawn = true;
 	this.currentDifficulty = 1;
 	this.timeTillDifficultyIncreases = 20; //Seconds
@@ -42,16 +42,23 @@ function EnemyManager(canvasWidth, canvasHeight, enemyImg){
 		var side =  Math.random()<.5;
 		this.result = 0;
 		
+		//y = 400-450
+		this.spawnY = this.generateRand(400, 450);
+		
 		//left
 		if(side == false){
-			//this.result = Math.floor((Math.random() * enemySpawnPositionRange) + 0);
-			this.result = 100;
+			this.result = this.generateRand(0, enemySpawnPositionRange);
+			//this.result = 10;
 		} else {
-			//this.result = Math.floor((Math.random() * this.canvasWidth) + (this.canvasWidth - enemySpawnPositionRange));
-			this.result = this.canvasWidth - 100;
+			this.result = this.generateRand(this.canvasWidth - enemySpawnPositionRange, this.canvasWidth);
+			//this.result = this.canvasWidth - 10;
 		}
-			enemyToAdd = new Enemy(this.enemyImg, this.result, 420);  
+			var enemyToAdd = new Enemy(this.enemyImg, this.result, this.spawnY);  
 			this.enemies.push(enemyToAdd);
+	}
+	
+	this.generateRand = function(lowNumber, highNumber){
+		return Math.floor(Math.random() * (highNumber - lowNumber + 1)) + lowNumber;
 	}
 }
 	
