@@ -13,8 +13,8 @@ function Animation(image,maxFrames,width,height,speed){
 	this.flipY = 1; // 1 - normal // -1 - flipped
 		
 	this.update = function(/*float*/ frameTime){
-		//if (this.state != 1 || this.maxFrames == 1 || this.speed == 0)
-			//return;
+		if (this.state != 1 || this.maxFrames == 1 || this.speed == 0)
+		return;
 	
 		//increment the clock
 		this.clock += frameTime;

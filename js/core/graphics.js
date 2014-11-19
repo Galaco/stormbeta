@@ -160,7 +160,7 @@ function GraphicsHandler(gameSurface){
 		this.gameArea.lineWidth = width;
 		this.gameArea.beginPath();
 		this.gameArea.moveTo(x1,y1);
-		this.gameArea.quadraticCurveTo(x2,y1+150,x2,y2);
+		this.gameArea.lineTo(x2,y2);
 		this.gameArea.stroke();
 
 		this.gameArea.closePath();
