@@ -165,4 +165,52 @@ function GraphicsHandler(gameSurface){
 
 		this.gameArea.closePath();
 	}
+	
+		this.drawBackground = function(/*img*/bgInstance, /*float*/x, /*float*/y, /*float*/angle, /*float*/scaleX, /*float*/scaleY, /*float*/alpha){ 
+		//sets default values
+		image = bgInstance.sprite;
+		x 		= typeof x 		!== 'undefined' ? x : (image.width/2);
+		y 		= typeof y 		!== 'undefined' ? y : (image.height/2);
+		angle 	= typeof angle 	!== 'undefined' ? angle : 0;
+		scaleX 	= typeof scaleX !== 'undefined' ? scaleX : 1.0;
+		scaleY 	= typeof scaleY !== 'undefined' ? scaleY : 1.0;
+		alpha 	= typeof alpha 	!== 'undefined' ? alpha : 1.0;
+		
+		//check if needs drawing
+		//if (((x-this.offsetX+(image.width*scaleX/2) > 0) && (y-this.offsetY+(image.height*scaleY/2) > 0)) 
+		//&& ((x-this.offsetX-(image.width*scaleX/2) < this.canvasWidth) && (y-this.offsetY-(image.height*scaleY/2) < this.canvasHeight))) {
+			
+			//save the current co-ordinate system 
+			//before we screw with it
+			this.gameArea.save(); 
+		 
+			//move to the middle of where we want to draw our image
+			this.gameArea.translate(x-this.offsetX, y-this.offsetY);
+		 
+			//rotate around that point, converting our 
+			//angle from degrees to radians 
+			this.gameArea.rotate(angle * (Math.PI/180));
+			
+			//scale image
+			this.gameArea.scale(scaleX,scaleY);
+			
+			//set alpha
+			this.gameArea.globalAlpha = alpha;
+			
+			//draw it up and to the left by half the width
+			//and height of the image to make it centered 
+			//origin is center of the image
+			this.gameArea.drawImage(image, -(image.width/2), -(image.height/2));
+			if(bgInstance.leftInstance){					
+				this.gameArea.drawImage(image, -(image.width/2)+image.width, -(image.height/2));
+			} else {
+				this.gameArea.drawImage(image, -(image.width/2)-image.width, -(image.height/2));
+			}
+			
+			
+			
+			//and restore the co-ords to how they were when we began
+			this.gameArea.restore(); 
+		//}
+	}
 }
