@@ -24,7 +24,7 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 	this.bg = new Background(this.model, "resources/bgtest1.jpg");
 	this.bg.setScrollRate(2);
 	this.bg.posY = 270;
-	this.bg2 = new Background(this.model, "resources/bgtest2.jpg");
+	this.bg2 = new Background(this.model, "resources/wall.png");
 	this.bg2.setScrollRate(3.5);
 	this.bg2.posY = 340;
 	//ANIMATION
@@ -73,7 +73,8 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 				}
 		this.model.clearScreen("#000");
 		this.model.drawBackground(this.bg, this.bg.posX, this.bg.posY,0,1,1);
-		this.model.drawBackground(this.bg2, this.bg2.posX, this.bg2.posY,0,1,1);
+		this.model.drawBackground(this.bg2, this.bg2.posX, this.bg2.posY,0,this.bg2.scaleX,1);
+		
 		//Draw everything
 		//Items
 		// for(i = 0; i < this.itemArray.length; i++)
