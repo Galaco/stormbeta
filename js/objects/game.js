@@ -15,8 +15,8 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 	this.warriorImg = this.model.loadImg("resources/animtestfull.png");
 	this.enemyImg = this.model.loadImg("resources/testWarrior.png");
 	this.colliderImg = this.model.loadImg("resources/attackcollider.png");
-	this.leftattackanim = this.model.loadImg("resources/attacktestfull.png");
-	this.rightattackanim = this.model.loadImg("resources/attacktestfull.png");
+	this.leftattackanim = this.model.loadImg("resources/attacktestfulll.png");
+	this.rightattackanim = this.model.loadImg("resources/attacktestfullr.png");
 
 	//AUDIO
 	//this.testSnd = new Audio("resources/test.wav");

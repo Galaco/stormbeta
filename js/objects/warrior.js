@@ -5,9 +5,9 @@ function Warrior(spriteA, posX, posY, colliderImg, attackLSheet, attackRSheet){
 	
 	this.numberOfAnimFrames = 4;
 	this.anim = new Animation(spriteA,this.numberOfAnimFrames,100,100,0.125);
-	this.attackAnimR = new Animation(attackRSheet,3, 200, 100, 0.125);
+	this.attackAnimR = new Animation(attackRSheet,6, 200, 100, 0.125);
 	this.attackAnimR.loop = 0;
-	this.attackAnimL = new Animation(attackLSheet,3, 200, 100, 0.125);
+	this.attackAnimL = new Animation(attackLSheet,6, 200, 100, 0.125);
 	this.attackAnimL.loop = 0;
 	this.attackAnimR.frameNo = 0;
 	this.attackAnimR.state = 0;
