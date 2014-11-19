@@ -23,7 +23,7 @@
 		this.y1 = this.y1 + ydiff;
 		this.y2 = this.y2 + ydiff;
 		
-		this.originX = xdiff;
-		this.originY = ydiff;
+		this.originX = xpos;
+		this.originY = ypos;
 	}
 }
