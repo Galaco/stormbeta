@@ -1,8 +1,9 @@
-function Animation(image,width,height,speed){
+function Animation(image,maxFrames,width,height,speed){
+	
 	this.image = image;
 	this.width = width;
 	this.height = height;
-	this.maxFrames = image.width / width;
+	this.maxFrames = maxFrames;
 	this.frameNo = 0;
 	this.speed = speed; //in seconds
 	this.clock = 0;
@@ -10,10 +11,10 @@ function Animation(image,width,height,speed){
 	this.state = 1; // 0 - paused // 1 - playing // 2 - stopped
 	this.flipX = 1; // 1 - normal // -1 - flipped
 	this.flipY = 1; // 1 - normal // -1 - flipped
-	
+		
 	this.update = function(/*float*/ frameTime){
-		if (this.state != 1 || this.maxFrames == 1 || this.speed == 0)
-			return;
+		//if (this.state != 1 || this.maxFrames == 1 || this.speed == 0)
+			//return;
 	
 		//increment the clock
 		this.clock += frameTime;

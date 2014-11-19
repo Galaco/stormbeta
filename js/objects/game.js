@@ -11,7 +11,7 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 	this.lastTime = this.currentTime;
 	
 	//IMAGES
-	this.warriorImg = this.model.loadImg("resources/testWarrior.png");
+	this.warriorImg = this.model.loadImg("resources/animtestfull.png");
 	this.colliderImg = this.model.loadImg("resources/attackcollider.png");
 
 	//AUDIO
@@ -75,13 +75,14 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 		//Update enemies
 		for(i = 0; i < this.enemyManager.enemies.length; i++)
 		{
-			this.itemArray[i].update();
+			/*this.itemArray[i].update();
 			if (this.itemArray[i].aabb.colliding(this.currentWarrior)){
 				if (this.currentWarrior.attacking){
 					this.itemArray[i].onCollision();	
 				}
 			}
 			this.enemyManager.enemies[i].update();
+		*/
 		}
 		// http://www.cambiaresearch.com/articles/15/javascript-char-codes-key-codes
 	}
@@ -93,7 +94,7 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 		this.model.drawBackground(this.bg4, this.bg4.posX, this.bg4.posY,0,this.bg4.scaleX, this.bg4.scaleY);
 		this.model.drawBackground(this.bg3, this.bg3.posX, this.bg3.posY,0,this.bg3.scaleX, this.bg3.scaleY);
 		//Draw warrior
-		this.model.draw(this.currentWarrior.sprite, this.currentWarrior.posX, this.currentWarrior.posY,1,1,1.0);
+		this.model.drawAnimFrame(this.currentWarrior.anim, this.currentWarrior.posX, this.currentWarrior.posY,0);
 		
 			if(this.currentWarrior.childLeft.visibility == true){
 				this.model.draw(this.currentWarrior.childLeft.sprite, this.currentWarrior.childLeft.xpos, this.currentWarrior.childLeft.ypos,1,1,1.0);

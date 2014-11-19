@@ -2,6 +2,8 @@ function Warrior(spriteA, posX, posY, colliderImg){
 
 	//Sprite setting
 	this.sprite = spriteA;
+	
+	this.anim = new Animation(spriteA,4,100,100,0.125);
 	this.aabb = new AABB(1,1,2,2);
 	var self = this;
 	
@@ -40,6 +42,7 @@ function Warrior(spriteA, posX, posY, colliderImg){
 	}
 	
 	this.update = function(frameTime, keys) {
+		this.anim.update(frameTime);
 		//Attack handling
 		if(this.attacking == true) {
 			this.currentAttackTime += frameTime;
