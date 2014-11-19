@@ -73,8 +73,8 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 
 	this.draw = function(){
 		this.model.clearScreen('#FFF');
-				this.model.drawBackground(this.bg, this.bg.posX, this.bg.posY,0,1,1);
-		this.model.drawBackground(this.bg2, this.bg2.posX, this.bg2.posY,0,1,1);
+				this.model.drawBackground(this.bg, this.bg.posX, this.bg.posY,0,this.bg.scaleX,this.bg.scaleY);
+		this.model.drawBackground(this.bg2, this.bg2.posX, this.bg2.posY,0,this.bg2.scaleX, this.bg2.scaleY);
 		//Draw warrior
 		this.model.draw(this.currentWarrior.sprite, this.currentWarrior.posX, this.currentWarrior.posY,1,1,1.0);
 		
