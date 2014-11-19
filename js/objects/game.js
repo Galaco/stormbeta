@@ -15,6 +15,8 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 	this.warriorImg = this.model.loadImg("resources/animtestfull.png");
 	this.enemyImg = this.model.loadImg("resources/testWarrior.png");
 	this.colliderImg = this.model.loadImg("resources/attackcollider.png");
+	this.leftattackanim = this.model.loadImg("resources/attacktestfull.png");
+	this.rightattackanim = this.model.loadImg("resources/attacktestfull.png");
 
 	//AUDIO
 	//this.testSnd = new Audio("resources/test.wav");
@@ -26,7 +28,7 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 	this.bg.setScrollRate(1);
 	this.bg.posY = 270;
 	this.bg2 = new Background(this.model, "resources/wall.png");
-	this.bg2.setScrollRate(1.4);
+	this.bg2.setScrollRate(1.5);
 	this.bg2.posY = 262;
 	this.bg3 = new Background(this.model, "resources/fbbar.png");
 	this.bg3.setScrollRate(1.8);
@@ -44,7 +46,7 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 	//Entities
 
 	this.enemyManager = new EnemyManager(this.model.canvasWidth, this.model.canvasHeight, this.enemyImg);
-	this.currentWarrior = new Warrior(this.warriorImg, this.model.canvasWidth/2, 420, this.colliderImg);
+	this.currentWarrior = new Warrior(this.warriorImg, this.model.canvasWidth/2, 420, this.colliderImg, this.leftattackanim, this.rightattackanim);
 	
 	//this is main game loop
 	this.update = function(/*array of bytes*/ key, /*int*/ mouseX, /*int*/ mouseY, /*bool*/ isMouseDown) {
@@ -121,7 +123,14 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 		this.model.drawBackground(this.bg4, this.bg4.posX, this.bg4.posY,0,this.bg4.scaleX, this.bg4.scaleY);
 		this.model.drawBackground(this.bg3, this.bg3.posX, this.bg3.posY,0,this.bg3.scaleX, this.bg3.scaleY);
 		//Draw warrior
-		this.model.drawAnimFrame(this.currentWarrior.anim, this.currentWarrior.posX, this.currentWarrior.posY,0);
+		if(this.currentWarrior.animState == 0) {
+					this.model.drawAnimFrame(this.currentWarrior.anim, this.currentWarrior.posX, this.currentWarrior.posY,0);
+		} else if(this.currentWarrior.animState == 1) {
+					this.model.drawAnimFrame(this.currentWarrior.attackAnimR, this.currentWarrior.posX, this.currentWarrior.posY,0);
+			} else if(this.currentWarrior.animState == 2) {
+					this.model.drawAnimFrame(this.currentWarrior.attackAnimL, this.currentWarrior.posX, this.currentWarrior.posY,0);
+			}
+
 		
 			if(this.currentWarrior.childLeft.visibility == true){
 				this.model.draw(this.currentWarrior.childLeft.sprite, this.currentWarrior.childLeft.xpos, this.currentWarrior.childLeft.ypos,1,1,1.0);

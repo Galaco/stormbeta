@@ -1,13 +1,21 @@
-function Warrior(spriteA, posX, posY, colliderImg){
+function Warrior(spriteA, posX, posY, colliderImg, attackLSheet, attackRSheet){
 
 	//Sprite setting
 	this.sprite = spriteA;
 	
 	this.numberOfAnimFrames = 4;
 	this.anim = new Animation(spriteA,this.numberOfAnimFrames,100,100,0.125);
+	this.attackAnimR = new Animation(attackRSheet,3, 200, 100, 0.125);
+	this.attackAnimR.loop = 0;
+	this.attackAnimL = new Animation(attackLSheet,3, 200, 100, 0.125);
+	this.attackAnimL.loop = 0;
+	this.attackAnimR.frameNo = 0;
+	this.attackAnimR.state = 0;
+	this.attackAnimL.state = 0;
 	this.aabb = new AABB(1,1,2,2);
 	var self = this;
 	this.health = 100;
+	this.animState = 0; //0 - walking, 1 - attack right, 2 - attack left
 	
 	this.sprite.onload = function() {
 		this.actualWidth = self.sprite.width/4;
@@ -53,6 +61,8 @@ function Warrior(spriteA, posX, posY, colliderImg){
 	
 	this.update = function(frameTime, keys) {
 		this.anim.update(frameTime);
+		this.attackAnimR.update(frameTime);
+		this.attackAnimL.update(frameTime);
 		//Attack handling
 		if(this.attacking == true) {
 			this.currentAttackTime += frameTime;
@@ -62,6 +72,11 @@ function Warrior(spriteA, posX, posY, colliderImg){
 				this.childLeft.setActive(false);
 				this.childRight.setActive(false);		
 				this.currentAttackTime = 0;
+				this.animState = 0;
+				this.attackAnimR.frameNo = 0;
+				this.attackAnimL.frameNo = 0;
+				this.attackAnimR.state = 0;
+				this.attackAnimL.state = 0;
 			}
 			return;
 		}
@@ -78,11 +93,13 @@ function Warrior(spriteA, posX, posY, colliderImg){
 		if (this.leftAttackKey in keys) {
 			this.attackLeft();
 			this.attacking = true;
+			this.attackAnimL.state = 1;
 		}
 		
 		if (this.rightAttackKey in keys) {
 			this.attackRight();
 			this.attacking = true;
+			this.attackAnimR.state = 1;
 		}
 		
 		if (this.specialActivateKey in keys) {
@@ -92,10 +109,12 @@ function Warrior(spriteA, posX, posY, colliderImg){
 	
 	this.attackLeft = function() {
 		this.childLeft.setActive(true);
+		this.animState = 2;
 	}
 	
 	this.attackRight = function() {
 		this.childRight.setActive(true);
+		this.animState = 1;
 	}
 	
 	this.activateSpecial = function() {
