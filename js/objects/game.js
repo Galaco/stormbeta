@@ -12,7 +12,7 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 	this.inited = false;
 	
 	//IMAGES
-	this.warriorImg = this.model.loadImg("resources/animtestfull.png");
+	this.warriorImg = this.model.loadImg("resources/walkfull.png");
 	this.enemyImg = this.model.loadImg("resources/testWarrior.png");
 	this.colliderImg = this.model.loadImg("resources/attackcollider.png");
 	this.leftattackanim = this.model.loadImg("resources/attacktestfulll.png");
