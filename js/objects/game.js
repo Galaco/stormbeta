@@ -18,7 +18,6 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 	//this.testSnd = new Audio("resources/test.wav");
 	
 	//ARRAYS
-	this.itemArray = [];
 	
 	//Background elements
 	this.bg = new Background(this.model, "resources/bgtest1.jpg");
@@ -39,6 +38,7 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 	
 	//Entities
 	this.currentWarrior = new Warrior(this.warriorImg, this.model.canvasWidth/2, this.model.canvasHeight/2, this.colliderImg);
+	this.enemyManager = new EnemyManager(this.model.canvasWidth, this.model.canvasHeight, this.colliderImg);
 	
 	//this is main game loop
 	this.update = function(/*array of bytes*/ key, /*int*/ mouseX, /*int*/ mouseY, /*bool*/ isMouseDown) {
@@ -63,10 +63,13 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 		this.bg.scroll();
 		this.bg2.scroll();
 		
+		//Enemy manager
+		this.enemyManager.update(frameTime);
 		
-		for(i = 0; i < this.itemArray.length; i++)
+		//Update enemies
+		for(i = 0; i < this.enemyManager.enemies.length; i++)
 		{
-			this.itemArray[i].update();
+			this.enemyManager.enemies[i].update();
 		}
 		// http://www.cambiaresearch.com/articles/15/javascript-char-codes-key-codes
 	}
@@ -86,9 +89,9 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 				}
 		//Draw everything
 		//Items
-		 for(i = 0; i < this.itemArray.length; i++)
+		 for(i = 0; i < this.enemyManager.enemies.length; i++)
 		 {
-			 this.model.draw(this.itemArray[i].sprite, this.itemArray[i].posX, this.itemArray[i].posY,0,0.1,0.1);
+			 this.model.draw(this.enemyManager.enemies[i].sprite, this.enemyManager.enemies[i].posX, this.enemyManager.enemies[i].posY,1,1,1.0);
 			// this.drawSpriteByID(this.itemArray[i].id, this.itemArray[i].posX, this.itemArray[i].posY,1,1,false,this.itemArray[i].angle);
 		 }		
 	}
