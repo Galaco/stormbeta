@@ -1,7 +1,7 @@
 function Enemy(sprite, posX, posY){
 	//Sprite
 	this.sprite = sprite;
-	this.aabb = new AABB(this.sprite);
+	this.aabb = new AABB(posX, posY, posX+this.sprite.width, posX+this.sprite.height);
 	this.speed = 1;
 	this.hp = 100;
 	
