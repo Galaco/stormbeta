@@ -17,6 +17,9 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 	this.colliderImg = this.model.loadImg("resources/attackcollider.png");
 	this.leftattackanim = this.model.loadImg("resources/attacktestfulll.png");
 	this.rightattackanim = this.model.loadImg("resources/attacktestfullr.png");
+	
+	this.leftenemyanim = this.model.loadImg("resources/enemyaniml.png");
+	this.rightenemyanim = this.model.loadImg("resources/enemyanimr.png");
 
 	//AUDIO
 	//this.testSnd = new Audio("resources/test.wav");
@@ -45,7 +48,7 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 	
 	//Entities
 
-	this.enemyManager = new EnemyManager(this.model.canvasWidth, this.model.canvasHeight, this.enemyImg);
+	this.enemyManager = new EnemyManager(this.model.canvasWidth, this.model.canvasHeight, this.leftenemyanim, this.rightenemyanim);
 	this.currentWarrior = new Warrior(this.warriorImg, this.model.canvasWidth/2, 420, this.colliderImg, this.leftattackanim, this.rightattackanim);
 	
 	//this is main game loop
@@ -106,7 +109,7 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 					this.enemyManager.enemies.shouldSpawn = false;
 				}
 			}
-			this.enemyManager.enemies[i].update();
+			this.enemyManager.enemies[i].update(frameTime);
 			
 			//Check collisions with player and attack objects
 			//var enemyAABB = enemyManager.enemies[i].aabb;
@@ -122,6 +125,20 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 		this.model.drawBackground(this.bg2, this.bg2.posX, this.bg2.posY,0,this.bg2.scaleX, this.bg2.scaleY);
 		this.model.drawBackground(this.bg4, this.bg4.posX, this.bg4.posY,0,this.bg4.scaleX, this.bg4.scaleY);
 		this.model.drawBackground(this.bg3, this.bg3.posX, this.bg3.posY,0,this.bg3.scaleX, this.bg3.scaleY);
+		
+		//Enemies
+		 for(i = 0; i < this.enemyManager.enemies.length; i++)
+		 {
+			 //this.model.draw(this.enemyManager.enemies[i].sprite, this.enemyManager.enemies[i].posX, this.enemyManager.enemies[i].posY,1,1,1.0);
+			 //this.enemyManager.enemies[i].aabb.renderDebug(this.model);
+			 var gotEnemy = this.enemyManager.enemies[i];
+			 if(gotEnemy.animLeft) {
+					this.model.drawAnimFrame(gotEnemy.animL, gotEnemy.posX, gotEnemy.posY,0);
+					} else {
+					this.model.drawAnimFrame(gotEnemy.animR, gotEnemy.posX, gotEnemy.posY,0);
+			}
+		 }
+		
 		//Draw warrior
 		if(this.currentWarrior.animState == 0) {
 					this.model.drawAnimFrame(this.currentWarrior.anim, this.currentWarrior.posX, this.currentWarrior.posY,0);
@@ -132,24 +149,18 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 			}
 
 		
-			if(this.currentWarrior.childLeft.visibility == true){
-				this.model.draw(this.currentWarrior.childLeft.sprite, this.currentWarrior.childLeft.xpos, this.currentWarrior.childLeft.ypos,1,1,1.0);
-				this.currentWarrior.childLeft.aabb.renderDebug(this.model);
+			// if(this.currentWarrior.childLeft.visibility == true){
+				// this.model.draw(this.currentWarrior.childLeft.sprite, this.currentWarrior.childLeft.xpos, this.currentWarrior.childLeft.ypos,1,1,1.0);
+				// this.currentWarrior.childLeft.aabb.renderDebug(this.model);
 
-				}
-			if(this.currentWarrior.childRight.visibility == true){
-				this.model.draw(this.currentWarrior.childRight.sprite, this.currentWarrior.childRight.xpos, this.currentWarrior.childRight.ypos,1,1,1.0);
-				this.currentWarrior.childRight.aabb.renderDebug(this.model);
-				}
+				// }
+			// if(this.currentWarrior.childRight.visibility == true){
+				// this.model.draw(this.currentWarrior.childRight.sprite, this.currentWarrior.childRight.xpos, this.currentWarrior.childRight.ypos,1,1,1.0);
+				// this.currentWarrior.childRight.aabb.renderDebug(this.model);
+				// }
 		//Draw everything
-		//Items
-		 for(i = 0; i < this.enemyManager.enemies.length; i++)
-		 {
-			 this.model.draw(this.enemyManager.enemies[i].sprite, this.enemyManager.enemies[i].posX, this.enemyManager.enemies[i].posY,1,1,1.0);
-			 this.enemyManager.enemies[i].aabb.renderDebug(this.model);
-			// this.drawSpriteByID(this.itemArray[i].id, this.itemArray[i].posX, this.itemArray[i].posY,1,1,false,this.itemArray[i].angle);
-		 }
-		 this.currentWarrior.aabb.renderDebug(this.model);
+		
+		//this.currentWarrior.aabb.renderDebug(this.model);
 		 
 		 //Dead
 		 if(this.currentWarrior.health <= 0) {

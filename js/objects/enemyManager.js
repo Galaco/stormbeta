@@ -1,6 +1,7 @@
-function EnemyManager(canvasWidth, canvasHeight, enemyImg){
+function EnemyManager(canvasWidth, canvasHeight, enemyAnimL, enemyAnimR){
 	
-	this.enemyImg = enemyImg;
+	this.enemyaniml = enemyAnimL;
+	this.enemyanimr = enemyAnimR;
 	this.canvasWidth = canvasWidth;
 	this.canvasHeight = canvasHeight;
 	this.enemies = [];
@@ -53,7 +54,7 @@ function EnemyManager(canvasWidth, canvasHeight, enemyImg){
 			this.result = this.generateRand(this.canvasWidth - enemySpawnPositionRange, this.canvasWidth);
 			//this.result = this.canvasWidth - 10;
 		}
-			var enemyToAdd = new Enemy(this.enemyImg, this.result, this.spawnY);  
+			var enemyToAdd = new Enemy(this.enemyaniml, this.enemyanimr, this.result, this.spawnY);  
 			this.enemies.push(enemyToAdd);
 	}
 	
