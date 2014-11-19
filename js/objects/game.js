@@ -48,7 +48,7 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 	this.currentWarrior = new Warrior(this.warriorImg, this.model.canvasWidth/2, 420, this.colliderImg, this.leftattackanim, this.rightattackanim);
 	
 	this.uiManager = new UIManager();
-	this.uiManager.addElement(new UIElement( this.model.loadImg("resources/hpbar.png"), 20, 28, "%", "HP: ", 240, -12, 200, 1));
+	this.uiManager.addElement(new UIElement( this.model.loadImg("resources/hpbar.png"), 20, 28, "%", "HP: ", 340, -12, 200, 1));
 	
 	
 	
@@ -153,13 +153,20 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 		 {
 			 this.model.draw(this.enemyManager.enemies[i].sprite, this.enemyManager.enemies[i].posX, this.enemyManager.enemies[i].posY,1,1,1.0);
 			 this.enemyManager.enemies[i].aabb.renderDebug(this.model);
+			 this.model.draw(this.uiManager.elements[0].sprite, 
+			 this.enemyManager.enemies[i].posX-( this.enemyManager.enemies[i].aabb.y2 -  this.enemyManager.enemies[i].aabb.originY)+((this.enemyManager.enemies[i].hp*0.75)), 
+			 this.enemyManager.enemies[i].posY-( this.enemyManager.enemies[i].aabb.y2 -  this.enemyManager.enemies[i].aabb.originY)-8,
+			 0,
+			 this.enemyManager.enemies[i].hp*0.75,
+			 0.25,
+			 1.0);
 			// this.drawSpriteByID(this.itemArray[i].id, this.itemArray[i].posX, this.itemArray[i].posY,1,1,false,this.itemArray[i].angle);
 		 }
 		 this.currentWarrior.aabb.renderDebug(this.model);
 		 
 		 for(i = 0; i < this.uiManager.elements.length; i++){
 			this.model.draw(this.uiManager.elements[i].sprite, 
-							this.uiManager.elements[i].posX+this.uiManager.elements[i].offsetX, 
+							this.uiManager.elements[i].posX+this.uiManager.elements[i].offsetX-(200-this.uiManager.elements[i].numerical), 
 							this.uiManager.elements[i].posY+this.uiManager.elements[i].offsetY,
 							0,
 							this.uiManager.elements[i].scaleX, 
