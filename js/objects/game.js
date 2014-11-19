@@ -20,13 +20,18 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 	//ARRAYS
 	this.itemArray = [];
 	
-	
+	//Background elements
 	this.bg = new Background(this.model, "resources/bgtest1.jpg");
 	this.bg.setScrollRate(2);
 	this.bg.posY = 270;
 	this.bg2 = new Background(this.model, "resources/wall.png");
 	this.bg2.setScrollRate(3.5);
 	this.bg2.posY = 360;
+	
+	
+	//Enemies
+	//this.itemArray.push(new Enemy(this.model.loadImg("resources/attackcollider.png"), 961, 100 ));
+	
 	//ANIMATION
 		
 	//GENERAL VARIEBLES
@@ -57,6 +62,12 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 
 		this.bg.scroll();
 		this.bg2.scroll();
+		
+		
+		for(i = 0; i < this.itemArray.length; i++)
+		{
+			this.itemArray[i].update();
+		}
 		// http://www.cambiaresearch.com/articles/15/javascript-char-codes-key-codes
 	}
 
@@ -75,12 +86,11 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 				}
 		//Draw everything
 		//Items
-		// for(i = 0; i < this.itemArray.length; i++)
-		// {
-		//	 this.model.draw(this.itemArray[i].sprite, this.itemArray[i].posX, this.itemArray[i].posY,0,0.1,0.1);
+		 for(i = 0; i < this.itemArray.length; i++)
+		 {
+			 this.model.draw(this.itemArray[i].sprite, this.itemArray[i].posX, this.itemArray[i].posY,0,0.1,0.1);
 			// this.drawSpriteByID(this.itemArray[i].id, this.itemArray[i].posX, this.itemArray[i].posY,1,1,false,this.itemArray[i].angle);
-	
-		// }		
+		 }		
 	}
 	
 	this.init = function(){
