@@ -25,4 +25,8 @@
 		this.originX = this.x1 + width/2;
 		this.originY = this.y1 + height/2;
 	}
+	
+	this.renderDebug = function (model) {
+		model.drawLine(this.x1, this.y1, this.x2, this.y2, "#0F0", "2");
+	}
 }
