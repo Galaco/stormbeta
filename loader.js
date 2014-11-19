@@ -14,7 +14,8 @@ document.write("<script src='js/objects/warrior.js' type='text/javascript'></scr
 document.write("<script src='js/objects/enemy.js' type='text/javascript'></script>");
 document.write("<script src='js/objects/aabb.js' type='text/javascript'></script>");
 document.write("<script src='js/objects/background.js' type='text/javascript'></script>");
-document.write("<script src='js/objects/aabb.js' type='text/javascript'></script>");
+document.write("<script src='js/objects/enemyManager.js' type='text/javascript'></script>");
+document.write("<script src='js/objects/enemy.js' type='text/javascript'></script>");
 
 
 document.write("<script src='js/objects/uielement.js' type='text/javascript'></script>");

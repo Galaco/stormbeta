@@ -24,19 +24,5 @@
 		
 		this.originX = this.x1 + width/2;
 		this.originY = this.y1 + height/2;
-		
-	
-	
-	
-	
-		/*xdiff = this.originX + (xpos - this.originX);
-		ydiff = this.originY + (ypos - this.originY);
-		this.x1 = this.x1 + xdiff;
-		this.x2 = this.x2 + xdiff;
-		this.y1 = this.y1 + ydiff;
-		this.y2 = this.y2 + ydiff;
-		
-		this.originX = xdiff;
-		this.originY = ydiff;*/
 	}
 }

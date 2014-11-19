@@ -19,9 +19,9 @@ function Enemy(sprite, posX, posY){
 	
 	
 	this.update = function() {
-		if (this.posX < 480){
+		if (this.posX < 480 - this.sprite.width/2){
 			this.posX+=this.speed;
-		} else {
+		} else if (this.posX > 480 + this.sprite.width/2) {
 			this.posX-=this.speed;
 		}
 		

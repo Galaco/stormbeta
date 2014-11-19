@@ -18,7 +18,6 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 	//this.testSnd = new Audio("resources/test.wav");
 	
 	//ARRAYS
-	this.itemArray = [];
 	
 	//Background elements
 	this.bg = new Background(this.model, "resources/bgtest1.jpg");
@@ -33,9 +32,7 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 	this.bg4 = new Background(this.model, "resources/floor.png");
 	this.bg4.setScrollRate(1.75);
 	this.bg4.posY = 460;
-	
-	//Enemies
-	this.itemArray.push(new Enemy(this.model.loadImg("resources/testEnemy.png"), 200, 420 ));
+
 	
 	//ANIMATION
 		
@@ -43,6 +40,8 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 	this.clock = 0;
 	
 	//Entities
+
+	this.enemyManager = new EnemyManager(this.model.canvasWidth, this.model.canvasHeight, this.warriorImg);
 	this.currentWarrior = new Warrior(this.warriorImg, this.model.canvasWidth/2, 420, this.colliderImg);
 	
 	//this is main game loop
@@ -70,8 +69,11 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 		this.bg3.scroll();
 		this.bg4.scroll();
 		
+		//Enemy manager
+		this.enemyManager.update(frameTime);
 		
-		for(i = 0; i < this.itemArray.length; i++)
+		//Update enemies
+		for(i = 0; i < this.enemyManager.enemies.length; i++)
 		{
 			this.itemArray[i].update();
 			if (this.itemArray[i].aabb.colliding(this.currentWarrior)){
@@ -79,6 +81,7 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 					this.itemArray[i].onCollision();	
 				}
 			}
+			this.enemyManager.enemies[i].update();
 		}
 		// http://www.cambiaresearch.com/articles/15/javascript-char-codes-key-codes
 	}
@@ -100,10 +103,9 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 				}
 		//Draw everything
 		//Items
-		 for(i = 0; i < this.itemArray.length; i++)
+		 for(i = 0; i < this.enemyManager.enemies.length; i++)
 		 {
-			 this.model.draw(this.itemArray[i].sprite, this.itemArray[i].posX, this.itemArray[i].posY,0,1,1);
-			 this.model.drawLine(this.itemArray[i].aabb.x1, this.itemArray[i].aabb.y1, this.itemArray[i].aabb.x2, this.itemArray[i].aabb.y2, "#0F0", "2");
+			 this.model.draw(this.enemyManager.enemies[i].sprite, this.enemyManager.enemies[i].posX, this.enemyManager.enemies[i].posY,1,1,1.0);
 			// this.drawSpriteByID(this.itemArray[i].id, this.itemArray[i].posX, this.itemArray[i].posY,1,1,false,this.itemArray[i].angle);
 		 }
 		 //console.log(this.currentWarrior);
