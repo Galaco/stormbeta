@@ -18,6 +18,7 @@ document.write("<script src='js/objects/enemyManager.js' type='text/javascript'>
 document.write("<script src='js/objects/enemy.js' type='text/javascript'></script>");
 
 
+document.write("<script src='js/objects/interfaceManager.js' type='text/javascript'></script>");
 document.write("<script src='js/objects/uielement.js' type='text/javascript'></script>");
 
 

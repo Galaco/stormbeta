@@ -40,9 +40,16 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 	this.clock = 0;
 	
 	//Entities
-
 	this.enemyManager = new EnemyManager(this.model.canvasWidth, this.model.canvasHeight, this.warriorImg);
 	this.currentWarrior = new Warrior(this.warriorImg, this.model.canvasWidth/2, 420, this.colliderImg);
+	
+	this.uiManager = new UIManager();
+	this.uiManager.addElement(new UIElement( this.model.loadImg("resources/hpbar.png"), 20, 20, "Hp: ", "%"));
+	this.uiManager.elements[0].updateCallback = function() {
+		self.numerical = this.currentWarrior.hp;
+	}
+	
+	
 	
 	//this is main game loop
 	this.update = function(/*array of bytes*/ key, /*int*/ mouseX, /*int*/ mouseY, /*bool*/ isMouseDown) {
@@ -75,8 +82,6 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 		//Update enemies
 		for(i = 0; i < this.enemyManager.enemies.length; i++)
 		{
-			this.itemArray[i].update();
-			if (this.itemArray[i].aabb.colliding(this.currentWarrior)){
 			if (this.enemyManager.enemies[i].aabb.colliding(this.currentWarrior)){
 				if (this.currentWarrior.attacking){
 					this.enemyManager.enemies[i].onCollision();	
