@@ -11,7 +11,8 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 	this.lastTime = this.currentTime;
 	
 	//IMAGES
-	//this.test = this.model.loadImg("resources/test.png");
+	this.warriorImg = this.model.loadImg("resources/testWarrior.png");
+	this.colliderImg = this.model.loadImg("resources/attackcollider.png");
 
 	//AUDIO
 	//this.testSnd = new Audio("resources/test.wav");
@@ -24,15 +25,20 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 	//GENERAL VARIEBLES
 	this.clock = 0;
 	
+	//Entities
+	this.currentWarrior = new Warrior(this.warriorImg, this.model.canvasWidth/2, this.model.canvasHeight/2, this.colliderImg);
+	
 	//this is main game loop
 	this.update = function(/*array of bytes*/ key, /*int*/ mouseX, /*int*/ mouseY, /*bool*/ isMouseDown) {
-		if (this.clock == 0){
+		if (this.clock === 0){
 			//Do init here
+			this.init(this.currentWarrior);
 		}
 		//LOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOP
 		this.currentTime = Date.now();
 		var frameTime = (this.currentTime - this.lastTime) / 1000; //get 1 frame update time in seconds
 		this.lastTime = this.currentTime;
+		this.currentWarrior.update(frameTime, key);
 		
 		this.clock += frameTime;
 		
@@ -46,7 +52,18 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 	}
 
 	this.draw = function(){
-
+		this.model.clearScreen('#FFF');
+		//Draw warrior
+		this.model.draw(this.currentWarrior.sprite, this.currentWarrior.posX, this.currentWarrior.posY,1,1,1.0);
+		
+			if(this.currentWarrior.childLeft.visibility == true){
+				this.model.draw(this.currentWarrior.childLeft.sprite, this.currentWarrior.childLeft.xpos, this.currentWarrior.childLeft.ypos,1,1,1.0);
+				}
+			if(this.currentWarrior.childRight.visibility == true){
+				this.model.draw(this.currentWarrior.childRight.sprite, this.currentWarrior.childRight.xpos, this.currentWarrior.childRight.ypos,1,1,1.0);
+				}
+				
+			
 		
 		//Draw everything
 		//Items
@@ -56,5 +73,12 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 			// this.drawSpriteByID(this.itemArray[i].id, this.itemArray[i].posX, this.itemArray[i].posY,1,1,false,this.itemArray[i].angle);
 	
 		// }		
+	}
+	
+	this.init = function(){
+		//left arrow - 37
+		//right arrow - 39
+		//control - 17
+		this.currentWarrior.setupKeyPresses(/*left*/37, /*right*/39, /*special*/17);
 	}
 }
