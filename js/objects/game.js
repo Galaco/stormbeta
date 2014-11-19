@@ -84,6 +84,11 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 		//Update enemies
 		for(i = 0; i < this.enemyManager.enemies.length; i++)
 		{
+			if (this.enemyManager.enemies[i].aabb.colliding(this.currentWarrior)){
+				if (this.currentWarrior.attacking){
+					this.enemyManager.enemies[i].onCollision();
+				}
+			}
 			if(this.enemyManager.enemies[i].dead)
 			{
 				//Kill it from the array
