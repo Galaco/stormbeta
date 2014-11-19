@@ -17,7 +17,6 @@
 	var self = this;
 	
 	this.update = function(num) {
-		console.log(num);
 		this.numerical = num;
 		this.text = this.prefix + this.numerical + this.suffix;
 		this.scaleX = this.numerical*2;
