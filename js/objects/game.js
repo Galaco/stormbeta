@@ -9,6 +9,7 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 	this.audio = audioHandler;
 	this.currentTime = Date.now();
 	this.lastTime = this.currentTime;
+	this.inited = false;
 	
 	//IMAGES
 	this.warriorImg = this.model.loadImg("resources/testWarrior.png");
@@ -24,13 +25,13 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 	this.bg.setScrollRate(1);
 	this.bg.posY = 270;
 	this.bg2 = new Background(this.model, "resources/wall.png");
-	this.bg2.setScrollRate(1.75);
+	this.bg2.setScrollRate(1.4);
 	this.bg2.posY = 262;
 	this.bg3 = new Background(this.model, "resources/fbbar.png");
-	this.bg3.setScrollRate(2);
+	this.bg3.setScrollRate(1.8);
 	this.bg3.posY = 520;
 	this.bg4 = new Background(this.model, "resources/floor.png");
-	this.bg4.setScrollRate(1.75);
+	this.bg4.setScrollRate(1.65);
 	this.bg4.posY = 460;
 
 	
@@ -46,17 +47,23 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 	
 	//this is main game loop
 	this.update = function(/*array of bytes*/ key, /*int*/ mouseX, /*int*/ mouseY, /*bool*/ isMouseDown) {
-		if (this.clock === 0){
-			//Do init here
-			this.init(this.currentWarrior);
-		}
+		
 		//LOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOP
 		this.currentTime = Date.now();
 		var frameTime = (this.currentTime - this.lastTime) / 1000; //get 1 frame update time in seconds
 		this.lastTime = this.currentTime;
 		this.currentWarrior.update(frameTime, key);
-		
 		this.clock += frameTime;
+		if (this.clock < 1){
+			//loading
+			this.model.drawText("LoADINg..........",137,150,50,"rgba(200,200,200,1.0)","Cabin Sketch",-3,0,0);
+			return;
+		}
+		if (this.clock < 1 && this.inited == false){
+			//Do init here
+			this.init(this.currentWarrior);
+		}
+		
 		
 		//Draw stuff
 		this.draw();
@@ -75,6 +82,11 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 		//Update enemies
 		for(i = 0; i < this.enemyManager.enemies.length; i++)
 		{
+			if (this.enemyManager.enemies[i].aabb.colliding(this.currentWarrior)){
+				if (this.currentWarrior.attacking){
+					this.enemyManager.enemies[i].onCollision();	
+				}
+			}
 			this.enemyManager.enemies[i].update();
 			
 			//Check collisions with player and attack objects
@@ -105,14 +117,19 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 		 for(i = 0; i < this.enemyManager.enemies.length; i++)
 		 {
 			 this.model.draw(this.enemyManager.enemies[i].sprite, this.enemyManager.enemies[i].posX, this.enemyManager.enemies[i].posY,1,1,1.0);
+			 this.enemyManager.enemies[i].aabb.renderDebug(this.model);
 			// this.drawSpriteByID(this.itemArray[i].id, this.itemArray[i].posX, this.itemArray[i].posY,1,1,false,this.itemArray[i].angle);
 		 }
-		}
+		 
+		 this.currentWarrior.childLeft.aabb.renderDebug(this.model);
+		 this.currentWarrior.childRight.aabb.renderDebug(this.model);
+	}
 	
 	this.init = function(){
 		//left arrow - 37
 		//right arrow - 39
 		//control - 17
 		this.currentWarrior.setupKeyPresses(/*left*/37, /*right*/39, /*special*/17);
+		this.inited = true;
 	}
 }

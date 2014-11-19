@@ -2,12 +2,6 @@ function Warrior(spriteA, posX, posY, colliderImg){
 
 	//Sprite setting
 	this.sprite = spriteA;
-	this.aabb = new AABB(1,1,2,2);
-	var self = this;
-	
-	this.sprite.onload = function() {
-		self.aabb = new AABB(posX-self.sprite.width/2, posY-self.sprite.height/2, posX+self.sprite.width/2, posY+self.sprite.height/2);
-	}
 		
 	//Position setting
 	this.posX = posX
@@ -17,6 +11,8 @@ function Warrior(spriteA, posX, posY, colliderImg){
 	this.leftAttackKey = null;
 	this.rightAttackKey = null;
 	this.specialActivateKey = null;
+	
+	
 	
 	//Child sprites
 
@@ -32,6 +28,8 @@ function Warrior(spriteA, posX, posY, colliderImg){
 	this.delaying = false;
 	this.attackingTime = 0.5;
 	this.delayTime = 0.5;
+	
+	this.playerAABB = spriteA/2
 	
 	this.setupKeyPresses = function(leftAttack, rightAttack, specialActive) {
 		this.leftAttackKey = leftAttack;
@@ -91,23 +89,14 @@ function Warrior(spriteA, posX, posY, colliderImg){
 
 function ChildCollider(xpos, ypos, sprite)
 {
-	
+	this.width = 30;
+	this.height = 30;
 	this.xpos = xpos;
 	this.ypos = ypos;
 	this.sprite = sprite;
 	this.visiblity = false;
 	this.attacking = false;
-	this.aabb = new AABB(1,1,2,2);
-	this.width = 1;
-	this.height = 1;
-	
-	var self = this;
-	
-	this.sprite.onload = function() {
-		self.width = this.width;
-		self.height = this.height;
-		self.aabb = new AABB(xpos - (self.width/2), ypos + (self.height/2), xpos + (self.width/2), ypos - (self.height/2));
-	}
+	this.aabb = new AABB(xpos - (this.width/2), ypos - (this.height/2), xpos + (this.width/2), ypos + (this.height/2));
 		
 	this.setActive = function(isActive){
 		this.visibility = isActive;
