@@ -1,25 +1,29 @@
-﻿function AABB(/*sprite*/sprite){
-	this.width = sprite.width;
-	this.height = sprite.height;
-	this.x1 = sprite.posX;
-	this.x2 = sprite.posX+sprite.width;
-	this.y1 = sprite.posY;
-	this.y2 = sprite.posY+sprite.height;
-	this.originX = sprite.posX+sprite.width/2;
-	this.originY = sprite.posY+sprite.height/2;
+﻿function AABB(x1, y1, x2, y2){
+	this.x1 = x1;
+	this.x2 = x2;
+	this.y1 = y1;
+	this.y2 = y2;
+	this.originX = x1 + ((x2 - x1) / 2);
+	this.originY = y1 + ((y2 - y1) / 2);
+	console.log("originX = ", this.originX);
+	console.log("originY = ", this.originY);
 	
-	colliding = function(/*AABB*/other){		
-		if(Math.abs(this.x1 - other.x1) > this.width + other.width) {
-			if(Math.abs(this.y1 - other.y1) < this.height + other.height)
-			{
-				return true;
-			}
+	this.colliding = function(/*AABB*/other){		
+		if(!(((this.x2< other.x1)||(other.x2<other.x1))||((this.y2 <other.y1)||(other.y2<this.y1)))){
+		return true;
 		}
 		return false;
 	}
 	
-	update = function(/*sprite*/sprite) {
-		this.originX = sprite.posX+sprite.width/2;
-		this.originY = sprite.posY+sprite.height/2;
+	this.update = function(xpos, ypos) {
+		xdiff = this.originX + (xpos - this.originX);
+		ydiff = this.originY + (ypos - this.originY);
+		this.x1 = this.x1 + xdiff;
+		this.x2 = this.x2 + xdiff;
+		this.y1 = this.y1 + ydiff;
+		this.y2 = this.y2 + ydiff;
+		
+		this.originX = xdiff;
+		this.originY = ydiff;
 	}
 }

@@ -12,6 +12,7 @@ document.write("<script src='js/core/animation.js' type='text/javascript'></scri
 document.write("<script src='js/objects/game.js' type='text/javascript'></script>");
 document.write("<script src='js/objects/warrior.js' type='text/javascript'></script>");
 document.write("<script src='js/objects/background.js' type='text/javascript'></script>");
+document.write("<script src='js/objects/aabb.js' type='text/javascript'></script>");
 
 
 

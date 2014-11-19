@@ -62,6 +62,8 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 
 	this.draw = function(){
 		this.model.clearScreen('#FFF');
+				this.model.drawBackground(this.bg, this.bg.posX, this.bg.posY,0,1,1);
+		this.model.drawBackground(this.bg2, this.bg2.posX, this.bg2.posY,0,1,1);
 		//Draw warrior
 		this.model.draw(this.currentWarrior.sprite, this.currentWarrior.posX, this.currentWarrior.posY,1,1,1.0);
 		
@@ -71,9 +73,7 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 			if(this.currentWarrior.childRight.visibility == true){
 				this.model.draw(this.currentWarrior.childRight.sprite, this.currentWarrior.childRight.xpos, this.currentWarrior.childRight.ypos,1,1,1.0);
 				}
-		this.model.clearScreen("#000");
-		this.model.drawBackground(this.bg, this.bg.posX, this.bg.posY,0,1,1);
-		this.model.drawBackground(this.bg2, this.bg2.posX, this.bg2.posY,0,1,1);
+
 		//Draw everything
 		//Items
 		// for(i = 0; i < this.itemArray.length; i++)

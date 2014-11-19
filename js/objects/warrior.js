@@ -92,10 +92,17 @@ function ChildCollider(xpos, ypos, sprite)
 	this.sprite = sprite;
 	this.visiblity = false;
 	this.attacking = false;
-	
+	this.aabb = new AABB(xpos - (this.width/2), ypos + (this.height/2), xpos + (this.width/2), ypos - (this.height/2));
+		
 	this.setActive = function(isActive){
 		this.visibility = isActive;
 		this.attacking = isActive;
+	}
+	
+	this.setPos = function(xpos, ypos){
+		this.xpos = xpos;
+		this.ypos = ypos;
+		this.aabb.update(xpos, ypos);
 	}
 }
 	
