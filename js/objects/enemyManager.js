@@ -44,15 +44,13 @@ function EnemyManager(canvasWidth, canvasHeight, enemyImg){
 		
 		//left
 		if(side == false){
-			//var result = Math.floor((Math.random() * enemySpawnPositionRange) + 0);
+			//this.result = Math.floor((Math.random() * enemySpawnPositionRange) + 0);
 			this.result = 100;
 		} else {
-			//this.result = Math.floor((Math.random() * this.canvasWidth + (this.canvasWidth - enemySpawnPositionRange)));
+			//this.result = Math.floor((Math.random() * this.canvasWidth) + (this.canvasWidth - enemySpawnPositionRange));
 			this.result = this.canvasWidth - 100;
 		}
-			var enemyXPos = this.result;
-			var enemyYPos = this.enemyYPos;
-			enemyToAdd = new Enemy(this.enemyImg, enemyXPos, enemyYPos);  
+			enemyToAdd = new Enemy(this.enemyImg, this.result, 420);  
 			this.enemies.push(enemyToAdd);
 	}
 }

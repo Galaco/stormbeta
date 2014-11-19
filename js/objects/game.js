@@ -21,15 +21,20 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 	
 	//Background elements
 	this.bg = new Background(this.model, "resources/bgtest1.jpg");
-	this.bg.setScrollRate(2);
+	this.bg.setScrollRate(1);
 	this.bg.posY = 270;
 	this.bg2 = new Background(this.model, "resources/wall.png");
-	this.bg2.setScrollRate(3.5);
-	this.bg2.posY = 360;
+	this.bg2.setScrollRate(1.75);
+	this.bg2.posY = 262;
+	this.bg3 = new Background(this.model, "resources/fbbar.png");
+	this.bg3.setScrollRate(2);
+	this.bg3.posY = 520;
+	this.bg4 = new Background(this.model, "resources/floor.png");
+	this.bg4.setScrollRate(1.75);
+	this.bg4.posY = 460;
 	
-	
-	//Enemies
-	//this.itemArray.push(new Enemy(this.model.loadImg("resources/attackcollider.png"), 961, 100 ));
+	//hud bits and bobs
+	this.hpId = new UIElement(this.model.loadImg("resources/hpbar.png"), 50, 20, "100%");
 	
 	//ANIMATION
 		
@@ -37,8 +42,9 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 	this.clock = 0;
 	
 	//Entities
-	this.currentWarrior = new Warrior(this.warriorImg, this.model.canvasWidth/2, this.model.canvasHeight/2, this.colliderImg);
-	this.enemyManager = new EnemyManager(this.model.canvasWidth, this.model.canvasHeight, this.colliderImg);
+
+	this.enemyManager = new EnemyManager(this.model.canvasWidth, this.model.canvasHeight, this.warriorImg);
+	this.currentWarrior = new Warrior(this.warriorImg, this.model.canvasWidth/2, 420, this.colliderImg);
 	
 	//this is main game loop
 	this.update = function(/*array of bytes*/ key, /*int*/ mouseX, /*int*/ mouseY, /*bool*/ isMouseDown) {
@@ -62,6 +68,8 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 
 		this.bg.scroll();
 		this.bg2.scroll();
+		this.bg3.scroll();
+		this.bg4.scroll();
 		
 		//Enemy manager
 		this.enemyManager.update(frameTime);
@@ -78,6 +86,8 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 		this.model.clearScreen('#FFF');
 				this.model.drawBackground(this.bg, this.bg.posX, this.bg.posY,0,this.bg.scaleX,this.bg.scaleY);
 		this.model.drawBackground(this.bg2, this.bg2.posX, this.bg2.posY,0,this.bg2.scaleX, this.bg2.scaleY);
+		this.model.drawBackground(this.bg4, this.bg4.posX, this.bg4.posY,0,this.bg4.scaleX, this.bg4.scaleY);
+		this.model.drawBackground(this.bg3, this.bg3.posX, this.bg3.posY,0,this.bg3.scaleX, this.bg3.scaleY);
 		//Draw warrior
 		this.model.draw(this.currentWarrior.sprite, this.currentWarrior.posX, this.currentWarrior.posY,1,1,1.0);
 		
@@ -94,6 +104,10 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 			 this.model.draw(this.enemyManager.enemies[i].sprite, this.enemyManager.enemies[i].posX, this.enemyManager.enemies[i].posY,1,1,1.0);
 			// this.drawSpriteByID(this.itemArray[i].id, this.itemArray[i].posX, this.itemArray[i].posY,1,1,false,this.itemArray[i].angle);
 		 }		
+		 
+		 
+		 this.model.draw(this.hpId.sprite, this.hpId.posX, this.hpId.posY,0,1,1);
+		 this.model.draw(this.hpId.text);
 	}
 	
 	this.init = function(){
