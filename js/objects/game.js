@@ -24,9 +24,9 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 	this.bg = new Background(this.model, "resources/bgtest1.jpg");
 	this.bg.setScrollRate(2);
 	this.bg.posY = 270;
-	this.bg2 = new Background(this.model, "resources/bgtest2.jpg");
+	this.bg2 = new Background(this.model, "resources/wall.png");
 	this.bg2.setScrollRate(3.5);
-	this.bg2.posY = 340;
+	this.bg2.posY = 360;
 	//ANIMATION
 		
 	//GENERAL VARIEBLES
@@ -73,7 +73,6 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 			if(this.currentWarrior.childRight.visibility == true){
 				this.model.draw(this.currentWarrior.childRight.sprite, this.currentWarrior.childRight.xpos, this.currentWarrior.childRight.ypos,1,1,1.0);
 				}
-
 		//Draw everything
 		//Items
 		// for(i = 0; i < this.itemArray.length; i++)

@@ -5,8 +5,21 @@
 	this.posX = 0;
 	this.posY = 0;
 	this.leftInstance = 1;
-	this.width = this.sprite.width;
-	this.height = this.sprite.height;
+	this.scaleX = 1;
+	this.scaleY = 1;
+	this.width = 0;
+	this.height = 0;
+	
+	var self = this;
+		
+	this.load = function(){
+		self.width = this.width;
+		self.height = this.height;
+		self.scaleX = (1/this.width)*graphicsHandler.canvasWidth;
+		self.scaleY = self.scaleX;
+	}
+	
+	this.sprite.onload = this.load;
 	
 	this.setScrollRate = function(/*ScrollRate*/scrollSpeed){
 		this.scrollRate = scrollSpeed;
@@ -17,12 +30,12 @@
 	}
 	
 	this.scroll = function (){
-		this.posX  -= this.scrollRate;
-		if (this.posX < 480) {
+		this.posX -= this.scrollRate;
+		if (this.posX < (this.sprite.width/2)*this.scaleX) {
 			this.leftInstance = 1;
 		}
-		if (this.posX < -480) {
-			this.posX = 1440;
+		if (this.posX < -(this.sprite.width/2)*this.scaleX) {
+			this.posX = ((this.sprite.width/2)*3)*this.scaleX;
 			this.leftInstance = 0;
 		}
 	}
