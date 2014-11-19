@@ -19,9 +19,9 @@ function Warrior(spriteA, posX, posY, colliderImg, attackLSheet, attackRSheet){
 	
 	this.sprite.onload = function() {
 		this.actualWidth = self.sprite.width/4;
-		self.aabb = new AABB((posX-this.actualWidth/4), 
+		self.aabb = new AABB((posX-this.actualWidth/3.5), 
 		(posY-self.sprite.height/2), 
-		((posX+this.actualWidth/4)), 
+		((posX+this.actualWidth/3.5)), 
 		(posY+self.sprite.height/2));
 	}
 		

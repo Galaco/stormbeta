@@ -51,6 +51,11 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 	this.enemyManager = new EnemyManager(this.model.canvasWidth, this.model.canvasHeight, this.leftenemyanim, this.rightenemyanim);
 	this.currentWarrior = new Warrior(this.warriorImg, this.model.canvasWidth/2, 420, this.colliderImg, this.leftattackanim, this.rightattackanim);
 	
+	this.uiManager = new UIManager();
+	this.uiManager.addElement(new UIElement( this.model.loadImg("resources/hpbar.png"), 20, 28, "%", "HP: ", 340, -12, 200, 1));
+	
+	
+	
 	//this is main game loop
 	this.update = function(/*array of bytes*/ key, /*int*/ mouseX, /*int*/ mouseY, /*bool*/ isMouseDown) {
 		
@@ -79,6 +84,8 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 		
 		//Enemy manager
 		this.enemyManager.update(frameTime);
+		
+		
 		
 		//Update enemies
 		for(i = 0; i < this.enemyManager.enemies.length; i++)
@@ -115,6 +122,8 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 			//var enemyAABB = enemyManager.enemies[i].aabb;
 			//var 
 			
+			//this.uiManager.update();
+			this.uiManager.elements[0].update(this.currentWarrior.health);
 		}
 		// http://www.cambiaresearch.com/articles/15/javascript-char-codes-key-codes
 	}
@@ -137,6 +146,15 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 					} else {
 					this.model.drawAnimFrame(gotEnemy.animR, gotEnemy.posX, gotEnemy.posY,0);
 			}
+			
+			//Draw status bars above enemies
+			this.model.draw(this.uiManager.elements[0].sprite, 
+			 this.enemyManager.enemies[i].posX-( this.enemyManager.enemies[i].aabb.y2 -  this.enemyManager.enemies[i].aabb.originY)+((this.enemyManager.enemies[i].hp*0.75)), 
+			 this.enemyManager.enemies[i].posY-( this.enemyManager.enemies[i].aabb.y2 -  this.enemyManager.enemies[i].aabb.originY)-8,
+			 0,
+			 this.enemyManager.enemies[i].hp*0.75,
+			 0.25,
+			 1.0);
 		 }
 		
 		//Draw warrior
@@ -161,11 +179,30 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 		//Draw everything
 		
 		//this.currentWarrior.aabb.renderDebug(this.model);
+		//Items
+		 for(i = 0; i < this.enemyManager.enemies.length; i++)
+		 {
+			 //this.model.draw(this.enemyManager.enemies[i].sprite, this.enemyManager.enemies[i].posX, this.enemyManager.enemies[i].posY,1,1,1.0);
+			 //this.enemyManager.enemies[i].aabb.renderDebug(this.model);
+			 
+			// this.drawSpriteByID(this.itemArray[i].id, this.itemArray[i].posX, this.itemArray[i].posY,1,1,false,this.itemArray[i].angle);
+		 }
+		 //this.currentWarrior.aabb.renderDebug(this.model);
+		 for(i = 0; i < this.uiManager.elements.length; i++){
+			this.model.draw(this.uiManager.elements[i].sprite, 
+							this.uiManager.elements[i].posX+this.uiManager.elements[i].offsetX-(200-this.uiManager.elements[i].numerical), 
+							this.uiManager.elements[i].posY+this.uiManager.elements[i].offsetY,
+							0,
+							this.uiManager.elements[i].scaleX, 
+							this.uiManager.elements[i].scaleY, 
+							1.0);
+			this.model.drawText(this.uiManager.elements[i].text, this.uiManager.elements[i].posX, this.uiManager.elements[i].posY, 30, "#0F0");
+		 }
 		 
 		 //Dead
 		 if(this.currentWarrior.health <= 0) {
 			this.model.clearScreen('#FFF');
-			this.model.drawText("YOU ARE DEAD",this.currentWarrior.posX,this.currentWarrior.posY,30,"rgba(255,0,0,1.0)");
+			this.model.drawText("YOU ARE DEAD",this.currentWarrior.posX,this.currentWarrior.posY,20,"rgba(255,0,0,1.0)");
 		}
 		 
 	}

@@ -86,7 +86,7 @@ function GraphicsHandler(gameSurface){
 		this.gameArea.rotate(angle * (Math.PI/180));
 		
 		//scale image
-		this.gameArea.scale(animation.flipX,animation.flipY);
+		//this.gameArea.scale(animation.flipX,animation.flipY);
 		
 		//set alpha
 		//this.gameArea.globalAlpha = alpha;
