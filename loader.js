@@ -17,6 +17,9 @@ document.write("<script src='js/objects/background.js' type='text/javascript'></
 document.write("<script src='js/objects/aabb.js' type='text/javascript'></script>");
 
 
+document.write("<script src='js/objects/uielement.js' type='text/javascript'></script>");
+
+
 
 ///////////////////////////////////
 //	GAME OBJECT
