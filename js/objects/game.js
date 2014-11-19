@@ -75,10 +75,9 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 		//Update enemies
 		for(i = 0; i < this.enemyManager.enemies.length; i++)
 		{
-			this.itemArray[i].update();
-			if (this.itemArray[i].aabb.colliding(this.currentWarrior)){
+			if (this.enemyManager.enemies[i].aabb.colliding(this.currentWarrior)){
 				if (this.currentWarrior.attacking){
-					this.itemArray[i].onCollision();	
+					this.enemyManager.enemies[i].onCollision();	
 				}
 			}
 			this.enemyManager.enemies[i].update();
@@ -106,9 +105,13 @@ function Game(/*GraphicsHandler*/ graphicsHandler, /*AudioHandler*/ audioHandler
 		 for(i = 0; i < this.enemyManager.enemies.length; i++)
 		 {
 			 this.model.draw(this.enemyManager.enemies[i].sprite, this.enemyManager.enemies[i].posX, this.enemyManager.enemies[i].posY,1,1,1.0);
+			 this.enemyManager.enemies[i].aabb.renderDebug(this.model);
 			// this.drawSpriteByID(this.itemArray[i].id, this.itemArray[i].posX, this.itemArray[i].posY,1,1,false,this.itemArray[i].angle);
 		 }
-		}
+		 
+		 this.currentWarrior.childLeft.aabb.renderDebug(this.model);
+		 this.currentWarrior.childRight.aabb.renderDebug(this.model);
+	}
 	
 	this.init = function(){
 		//left arrow - 37
