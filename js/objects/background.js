@@ -17,6 +17,10 @@
 		self.height = this.height;
 		self.scaleX = (1/this.width)*graphicsHandler.canvasWidth;
 		self.scaleY = self.scaleX;
+		if (self.scaleX < 1){
+			self.scaleX = 1;
+			self.scaleY = 1;
+		}
 	}
 	
 	this.sprite.onload = this.load;
