@@ -6,6 +6,7 @@
 	this.posY = 0;
 	this.leftInstance = 1;
 	this.scaleX = 1;
+	this.scaleY = 1;
 	this.width = 0;
 	this.height = 0;
 	
@@ -15,6 +16,7 @@
 		self.width = this.width;
 		self.height = this.height;
 		self.scaleX = (1/this.width)*graphicsHandler.canvasWidth;
+		self.scaleY = self.scaleX;
 	}
 	
 	this.sprite.onload = this.load;
